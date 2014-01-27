@@ -15,5 +15,5 @@ defaultBrowserId(function (err, id) {
 		throw err;
 	}
 
-	process.stdout.write(id);
+	console.log(id);
 });
