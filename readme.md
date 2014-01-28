@@ -16,8 +16,10 @@ npm install --save default-browser-id
 ```js
 var defaultBrowserId = require('default-browser-id');
 
-defaultBrowserId();
-//=> com.apple.Safari
+defaultBrowserId(function (err, browserId) {
+	console.log(browserId);
+	//=> com.apple.Safari
+});
 ```
 
 
