@@ -1,7 +1,8 @@
 'use strict';
 var bplist = require('bplist-parser');
+var untildify = require('untildify');
 
-var file = process.env.HOME + '/Library/Preferences/com.apple.LaunchServices.plist';
+var file = untildify('~/Library/Preferences/com.apple.LaunchServices.plist');
 var bundleId = 'com.apple.Safari';
 
 module.exports = function (cb) {

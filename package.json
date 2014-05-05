@@ -41,7 +41,8 @@
     "bin"
   ],
   "dependencies": {
-    "bplist-parser": "0.0.4"
+    "bplist-parser": "0.0.5",
+    "untildify": "^0.1.0"
   },
   "devDependencies": {
     "mocha": "*"
