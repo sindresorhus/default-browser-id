@@ -11,7 +11,7 @@ $ npm install --save default-browser-id
 ```
 
 
-## Example
+## Usage
 
 ```js
 var defaultBrowserId = require('default-browser-id');
