@@ -4,14 +4,11 @@
 > Example: `com.apple.Safari`
 
 
-## Install
+## Usage
 
 ```sh
 $ npm install --save default-browser-id
 ```
-
-
-## Usage
 
 ```js
 var defaultBrowserId = require('default-browser-id');
@@ -29,7 +26,7 @@ defaultBrowserId(function (err, browserId) {
 $ npm install --global default-browser-id
 ```
 
-```sh
+```
 $ default-browser-id --help
 
   Example
