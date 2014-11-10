@@ -14,7 +14,7 @@ module.exports = function (cb) {
 		var handlers = data && data[0]['LSHandlers'];
 
 		if (!handlers || handlers.length === 0) {
-			return cb(null, ret);
+			return cb(null, bundleId);
 		}
 
 		for (var i = 0; i < handlers.length; i++) {
