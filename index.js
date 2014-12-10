@@ -1,9 +1,10 @@
 'use strict';
+var os = require('os');
 var bplist = require('bplist-parser');
 var untildify = require('untildify');
-
-var file = untildify('~/Library/Preferences/com.apple.LaunchServices.plist');
 var bundleId = 'com.apple.Safari';
+var osxVersion = Number(os.release().split('.')[0]);
+var file = untildify(osxVersion >= 14 ? '~/Library/Preferences/com.apple.LaunchServices/com.apple.launchservices.secure.plist' : '~/Library/Preferences/com.apple.LaunchServices.plist');
 
 module.exports = function (cb) {
 	bplist.parseFile(file, function (err, data) {
