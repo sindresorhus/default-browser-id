@@ -7,6 +7,10 @@ var osxVersion = Number(os.release().split('.')[0]);
 var file = untildify(osxVersion >= 14 ? '~/Library/Preferences/com.apple.LaunchServices/com.apple.launchservices.secure.plist' : '~/Library/Preferences/com.apple.LaunchServices.plist');
 
 module.exports = function (cb) {
+	if (process.platform !== 'darwin') {
+		throw new Error('Only OS X systems are supported');
+	}
+
 	bplist.parseFile(file, function (err, data) {
 		if (err) {
 			return cb(err);
