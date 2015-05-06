@@ -16,7 +16,7 @@ module.exports = function (cb) {
 			return cb(err);
 		}
 
-		var handlers = data && data[0]['LSHandlers'];
+		var handlers = data && data[0].LSHandlers;
 
 		if (!handlers || handlers.length === 0) {
 			return cb(null, bundleId);

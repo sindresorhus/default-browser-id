@@ -6,7 +6,7 @@
 
 ## Usage
 
-```sh
+```
 $ npm install --save default-browser-id
 ```
 
@@ -15,14 +15,14 @@ var defaultBrowserId = require('default-browser-id');
 
 defaultBrowserId(function (err, browserId) {
 	console.log(browserId);
-	//=> com.apple.Safari
+	//=> 'com.apple.Safari'
 });
 ```
 
 
 ## CLI
 
-```sh
+```
 $ npm install --global default-browser-id
 ```
 
@@ -30,7 +30,7 @@ $ npm install --global default-browser-id
 $ default-browser-id --help
 
   Example
-    default-browser-id
+    $ default-browser-id
     com.apple.Safari
 ```
 
