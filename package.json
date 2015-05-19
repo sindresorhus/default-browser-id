@@ -3,15 +3,13 @@
   "version": "1.0.3",
   "description": "Get the bundle identifier of the default browser (OS X). Example: com.apple.Safari",
   "license": "MIT",
-  "bin": {
-    "default-browser-id": "cli.js"
-  },
   "repository": "sindresorhus/default-browser-id",
   "author": {
     "name": "Sindre Sorhus",
     "email": "sindresorhus@gmail.com",
-    "url": "http://sindresorhus.com"
+    "url": "sindresorhus.com"
   },
+  "bin": "cli.js",
   "engines": {
     "node": ">=0.10.0"
   },
@@ -23,8 +21,9 @@
     "cli.js"
   ],
   "keywords": [
+    "cli-app",
+    "cli",
     "osx",
-    "mac",
     "browser",
     "default",
     "plist",
@@ -33,12 +32,10 @@
     "bundleid",
     "id",
     "identifier",
-    "uti",
-    "cli",
-    "bin"
+    "uti"
   ],
   "dependencies": {
-    "bplist-parser": "0.0.6",
+    "bplist-parser": "^0.1.0",
     "meow": "^3.1.0",
     "untildify": "^2.0.0"
   },
