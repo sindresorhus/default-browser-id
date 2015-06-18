@@ -8,7 +8,7 @@ meow({
 		'Example',
 		'  $ default-browser-id',
 		'  com.apple.Safari'
-	].join('\n')
+	]
 });
 
 defaultBrowserId(function (err, id) {
