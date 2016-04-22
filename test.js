@@ -1,11 +1,6 @@
-'use strict';
-var assert = require('assert');
-var defaultBrowser = require('./');
+import test from 'ava';
+import m from './';
 
-it('should return the default browser', function (cb) {
-	defaultBrowser(function (err, id) {
-		console.log('Bundle id:', id);
-		assert(/^com\./.test(id));
-		cb();
-	});
+test(async t => {
+	t.regex(await m(), /^com\./);
 });
