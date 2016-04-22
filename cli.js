@@ -1,21 +1,12 @@
 #!/usr/bin/env node
 'use strict';
-var meow = require('meow');
-var defaultBrowserId = require('./');
+const meow = require('meow');
+const defaultBrowserId = require('./');
 
-meow({
-	help: [
-		'Example',
-		'  $ default-browser-id',
-		'  com.apple.Safari'
-	]
-});
+meow(`
+	Example
+	  $ default-browser-id
+	  com.apple.Safari
+`);
 
-defaultBrowserId(function (err, id) {
-	if (err) {
-		console.error(err.message);
-		process.exit(1);
-	}
-
-	console.log(id);
-});
+defaultBrowserId().then(console.log);

@@ -11,7 +11,7 @@
   },
   "bin": "cli.js",
   "engines": {
-    "node": ">=0.10.0"
+    "node": ">=4"
   },
   "scripts": {
     "test": "mocha"
@@ -37,6 +37,7 @@
   "dependencies": {
     "bplist-parser": "^0.1.0",
     "meow": "^3.3.0",
+    "pify": "^2.3.0",
     "untildify": "^2.0.0"
   },
   "devDependencies": {

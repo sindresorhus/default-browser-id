@@ -1,36 +1,32 @@
 'use strict';
-var os = require('os');
-var bplist = require('bplist-parser');
-var untildify = require('untildify');
-var bundleId = 'com.apple.Safari';
-var osxVersion = Number(os.release().split('.')[0]);
-var file = untildify(osxVersion >= 14 ? '~/Library/Preferences/com.apple.LaunchServices/com.apple.launchservices.secure.plist' : '~/Library/Preferences/com.apple.LaunchServices.plist');
+const os = require('os');
+const bplist = require('bplist-parser');
+const untildify = require('untildify');
+const pify = require('pify');
+const osxVersion = Number(os.release().split('.')[0]);
+const file = untildify(osxVersion >= 14 ? '~/Library/Preferences/com.apple.LaunchServices/com.apple.launchservices.secure.plist' : '~/Library/Preferences/com.apple.LaunchServices.plist');
 
-module.exports = function (cb) {
+module.exports = () => {
 	if (process.platform !== 'darwin') {
-		throw new Error('Only OS X systems are supported');
+		return Promise.reject(new Error('Only OS X is supported'));
 	}
 
-	bplist.parseFile(file, function (err, data) {
-		if (err) {
-			return cb(err);
-		}
+	let bundleId = 'com.apple.Safari';
 
-		var handlers = data && data[0].LSHandlers;
+	return pify(bplist.parseFile)(file).then(data => {
+		const handlers = data && data[0].LSHandlers;
 
 		if (!handlers || handlers.length === 0) {
-			return cb(null, bundleId);
+			return bundleId;
 		}
 
-		for (var i = 0; i < handlers.length; i++) {
-			var el = handlers[i];
-
+		for (const el of handlers) {
 			if (el.LSHandlerURLScheme === 'http' && el.LSHandlerRoleAll) {
 				bundleId = el.LSHandlerRoleAll;
 				break;
 			}
 		}
 
-		cb(null, bundleId);
+		return bundleId;
 	});
 };
