@@ -3,12 +3,12 @@ const os = require('os');
 const bplist = require('bplist-parser');
 const untildify = require('untildify');
 const pify = require('pify');
-const osxVersion = Number(os.release().split('.')[0]);
-const file = untildify(osxVersion >= 14 ? '~/Library/Preferences/com.apple.LaunchServices/com.apple.launchservices.secure.plist' : '~/Library/Preferences/com.apple.LaunchServices.plist');
+const macOsVersion = Number(os.release().split('.')[0]);
+const file = untildify(macOsVersion >= 14 ? '~/Library/Preferences/com.apple.LaunchServices/com.apple.launchservices.secure.plist' : '~/Library/Preferences/com.apple.LaunchServices.plist');
 
 module.exports = () => {
 	if (process.platform !== 'darwin') {
-		return Promise.reject(new Error('Only OS X is supported'));
+		return Promise.reject(new Error('macOS only'));
 	}
 
 	let bundleId = 'com.apple.Safari';
