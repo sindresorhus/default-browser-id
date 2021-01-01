@@ -1,4 +1,4 @@
-# default-browser-id [![Build Status](https://travis-ci.org/sindresorhus/default-browser-id.svg?branch=master)](https://travis-ci.org/sindresorhus/default-browser-id)
+# default-browser-id
 
 > Get the [bundle identifier](https://developer.apple.com/library/Mac/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html#//apple_ref/doc/plist/info/CFBundleIdentifier) of the default browser (macOS)<br>
 > Example: `com.apple.Safari`
