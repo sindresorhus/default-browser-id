@@ -1,32 +1,42 @@
-'use strict';
-const os = require('os');
-const bplist = require('bplist-parser');
-const untildify = require('untildify');
-const pify = require('pify');
-const macOsVersion = Number(os.release().split('.')[0]);
-const file = untildify(macOsVersion >= 14 ? '~/Library/Preferences/com.apple.LaunchServices/com.apple.launchservices.secure.plist' : '~/Library/Preferences/com.apple.LaunchServices.plist');
+import os from 'os';
+import {promises as fs} from 'fs';
+import bplist from 'bplist-parser';
+import untildify from 'untildify';
 
-module.exports = () => {
+const macOsVersion = Number(os.release().split('.')[0]);
+const filePath = untildify(macOsVersion >= 14 ? '~/Library/Preferences/com.apple.LaunchServices/com.apple.launchservices.secure.plist' : '~/Library/Preferences/com.apple.LaunchServices.plist');
+
+export default async function defaultBrowserId() {
 	if (process.platform !== 'darwin') {
-		return Promise.reject(new Error('macOS only'));
+		throw new Error('macOS only');
 	}
 
 	let bundleId = 'com.apple.Safari';
 
-	return pify(bplist.parseFile)(file).then(data => {
-		const handlers = data && data[0].LSHandlers;
-
-		if (!handlers || handlers.length === 0) {
+	let buffer;
+	try {
+		buffer = await fs.readFile(filePath);
+	} catch (error) {
+		if (error.code === 'ENOENT') {
 			return bundleId;
 		}
 
-		for (const el of handlers) {
-			if (el.LSHandlerURLScheme === 'http' && el.LSHandlerRoleAll) {
-				bundleId = el.LSHandlerRoleAll;
-				break;
-			}
-		}
+		throw error;
+	}
 
+	const data = bplist.parseBuffer(buffer);
+	const handlers = data && data[0].LSHandlers;
+
+	if (!handlers || handlers.length === 0) {
 		return bundleId;
-	});
-};
+	}
+
+	for (const handler of handlers) {
+		if (handler.LSHandlerURLScheme === 'http' && handler.LSHandlerRoleAll) {
+			bundleId = handler.LSHandlerRoleAll;
+			break;
+		}
+	}
+
+	return bundleId;
+}

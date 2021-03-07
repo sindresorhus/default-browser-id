@@ -1,6 +1,6 @@
 import test from 'ava';
-import m from './';
+import defaultBrowserId from './index.js';
 
-test(async t => {
-	t.regex(await m(), /^com\./);
+test('main', async t => {
+	t.regex(await defaultBrowserId(), /^com\./);
 });
