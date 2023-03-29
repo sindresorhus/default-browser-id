@@ -11,15 +11,25 @@
 		"url": "https://sindresorhus.com"
 	},
 	"type": "module",
-	"exports": "./index.js",
+	"main": "./dist/index.cjs",
+	"module": "./dist/index.mjs",
+	"exports": {
+		"require": "./dist/index.cjs",
+		"import": "./dist/index.mjs"
+	},
 	"engines": {
 		"node": ">=12"
 	},
 	"scripts": {
+		"build": "npm run build:cjs && npm run build:esm",
+		"build:cjs": "esbuild --outdir=dist --platform=node --format=cjs --out-extension:.js=.cjs --packages=external index.js",
+		"build:esm": "esbuild --outdir=dist --platform=node --format=esm --out-extension:.js=.mjs --packages=external index.js",
+		"prepublishOnly": "npm run build",
 		"test": "xo && ava"
 	},
 	"files": [
-		"index.js"
+		"dist/index.cjs",
+		"dist/index.mjs"
 	],
 	"keywords": [
 		"macos",
@@ -39,6 +49,7 @@
 	},
 	"devDependencies": {
 		"ava": "^3.15.0",
+		"esbuild": "^0.17.14",
 		"xo": "^0.38.2"
 	}
 }
