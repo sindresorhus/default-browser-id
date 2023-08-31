@@ -1,6 +1,6 @@
 {
 	"name": "default-browser-id",
-	"version": "3.0.0",
+	"version": "4.0.0",
 	"description": "Get the bundle identifier of the default browser (macOS). Example: com.apple.Safari",
 	"license": "MIT",
 	"repository": "sindresorhus/default-browser-id",
