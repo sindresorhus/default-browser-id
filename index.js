@@ -1,5 +1,6 @@
-import os from 'os';
-import {promises as fs} from 'fs';
+import process from 'node:process';
+import os from 'node:os';
+import fs from 'node:fs/promises';
 import bplist from 'bplist-parser';
 import untildify from 'untildify';
 
@@ -11,32 +12,30 @@ export default async function defaultBrowserId() {
 		throw new Error('macOS only');
 	}
 
-	let bundleId = 'com.apple.Safari';
+	const defaultBundleId = 'com.apple.Safari';
 
 	let buffer;
 	try {
 		buffer = await fs.readFile(filePath);
 	} catch (error) {
 		if (error.code === 'ENOENT') {
-			return bundleId;
+			return defaultBundleId;
 		}
 
 		throw error;
 	}
 
-	const data = bplist.parseBuffer(buffer);
-	const handlers = data && data[0].LSHandlers;
+	const handlers = bplist.parseBuffer(buffer)?.[0]?.LSHandlers;
 
 	if (!handlers || handlers.length === 0) {
-		return bundleId;
+		return defaultBundleId;
 	}
 
 	for (const handler of handlers) {
 		if (handler.LSHandlerURLScheme === 'http' && handler.LSHandlerRoleAll) {
-			bundleId = handler.LSHandlerRoleAll;
-			break;
+			return handler.LSHandlerRoleAll;
 		}
 	}
 
-	return bundleId;
+	return defaultBundleId;
 }

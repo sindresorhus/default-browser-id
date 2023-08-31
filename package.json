@@ -13,7 +13,7 @@
 	"type": "module",
 	"exports": "./index.js",
 	"engines": {
-		"node": ">=12"
+		"node": ">=18"
 	},
 	"scripts": {
 		"test": "xo && ava"
@@ -34,11 +34,11 @@
 		"uti"
 	],
 	"dependencies": {
-		"bplist-parser": "^0.2.0",
-		"untildify": "^4.0.0"
+		"bplist-parser": "^0.3.2",
+		"untildify": "^5.0.0"
 	},
 	"devDependencies": {
-		"ava": "^3.15.0",
-		"xo": "^0.38.2"
+		"ava": "^5.3.1",
+		"xo": "^0.56.0"
 	}
 }
