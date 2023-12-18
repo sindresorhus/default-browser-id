@@ -1,41 +1,18 @@
+import {promisify} from 'node:util';
 import process from 'node:process';
-import os from 'node:os';
-import fs from 'node:fs/promises';
-import bplist from 'bplist-parser';
-import untildify from 'untildify';
+import {execFile} from 'node:child_process';
 
-const macOsVersion = Number(os.release().split('.')[0]);
-const filePath = untildify(macOsVersion >= 14 ? '~/Library/Preferences/com.apple.LaunchServices/com.apple.launchservices.secure.plist' : '~/Library/Preferences/com.apple.LaunchServices.plist');
+const execFileAsync = promisify(execFile);
 
 export default async function defaultBrowserId() {
 	if (process.platform !== 'darwin') {
 		throw new Error('macOS only');
 	}
 
-	const defaultBundleId = 'com.apple.Safari';
+	const {stdout} = await execFileAsync('defaults', ['read', 'com.apple.LaunchServices/com.apple.launchservices.secure', 'LSHandlers']);
 
-	let buffer;
-	try {
-		buffer = await fs.readFile(filePath);
-	} catch (error) {
-		if (error.code === 'ENOENT') {
-			return defaultBundleId;
-		}
+	// `(?!-)` is to prevent matching `LSHandlerRoleAll = "-";`.
+	const match = /LSHandlerRoleAll = "(?!-)(?<id>[^"]+?)";\s+?LSHandlerURLScheme = (?:http|https);/.exec(stdout);
 
-		throw error;
-	}
-
-	const handlers = bplist.parseBuffer(buffer)?.[0]?.LSHandlers;
-
-	if (!handlers || handlers.length === 0) {
-		return defaultBundleId;
-	}
-
-	for (const handler of handlers) {
-		if (handler.LSHandlerURLScheme === 'http' && handler.LSHandlerRoleAll) {
-			return handler.LSHandlerRoleAll;
-		}
-	}
-
-	return defaultBundleId;
+	return match?.groups.id ?? 'com.apple.Safari';
 }

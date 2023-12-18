@@ -12,6 +12,7 @@
 	},
 	"type": "module",
 	"exports": "./index.js",
+	"sideEffects": false,
 	"engines": {
 		"node": ">=18"
 	},
@@ -33,12 +34,8 @@
 		"identifier",
 		"uti"
 	],
-	"dependencies": {
-		"bplist-parser": "^0.3.2",
-		"untildify": "^5.0.0"
-	},
 	"devDependencies": {
-		"ava": "^5.3.1",
+		"ava": "^6.0.1",
 		"xo": "^0.56.0"
 	}
 }
